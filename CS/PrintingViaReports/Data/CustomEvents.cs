@@ -80,8 +80,8 @@ namespace PrintingViaReports{
         public object OwnerId { get { return fOwnerId; } set { fOwnerId = value; } }
 
         public string CustomText { get { return fCustomText; } set { fCustomText = value; } }
-        public Color CustomColor { get { return fCustomColor; } set {fCustomColor = value; }
-        }
+        public Color CustomColor { get { return fCustomColor; } set {fCustomColor = value; } }
+        public int CustomColorARGB { get { return CustomColor.ToArgb(); } }
 
 
         public void BeginEdit() {

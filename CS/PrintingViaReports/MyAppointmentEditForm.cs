@@ -172,8 +172,8 @@ namespace PrintingViaReports {
 			SuspendUpdate();
 			try {
 				txSubject.Text = controller.Subject;
-				edStatus.Status = Appointments.Statuses.GetById(controller.StatusKey);
-				edLabel.Label = Appointments.Labels.GetById(controller.LabelKey);
+				edStatus.AppointmentStatus = Appointments.Statuses.GetById(controller.StatusKey);
+				edLabel.AppointmentLabel = Appointments.Labels.GetById(controller.LabelKey);
 			
 				dtStart.DateTime = controller.DisplayStart.Date;
 				dtEnd.DateTime= controller.DisplayEnd.Date;
@@ -219,10 +219,10 @@ namespace PrintingViaReports {
         }
         
         void UpdateAppointmentStatus() {
-            AppointmentStatus currentStatus = edStatus.Status;
-            AppointmentStatus newStatus = controller.UpdateAppointmentStatus(currentStatus);
-            if (newStatus != currentStatus)
-                edStatus.Status = newStatus;
+            IAppointmentStatus currentStatus = edStatus.AppointmentStatus;
+            IAppointmentStatus newStatus = controller.UpdateStatus(currentStatus);
+            if(newStatus != currentStatus)
+                edStatus.AppointmentStatus = newStatus;
         }
 
         #endregion
@@ -234,8 +234,8 @@ namespace PrintingViaReports {
                 return;
 
             controller.Subject = txSubject.Text;
-            controller.SetStatus(edStatus.Status);
-            controller.SetLabel(edLabel.Label);
+            controller.SetStatus(edStatus.AppointmentStatus);
+            controller.SetLabel(edLabel.AppointmentLabel);
             controller.AllDay = this.checkAllDay.Checked;
             controller.DisplayStart = this.dtStart.DateTime.Date + this.timeStart.Time.TimeOfDay;
             controller.DisplayEnd = this.dtEnd.DateTime.Date + this.timeEnd.Time.TimeOfDay;
