@@ -1,3 +1,14 @@
+<!-- default file list -->
+*Files to look at*:
+
+* [CustomEvents.cs](./CS/PrintingViaReports/Data/CustomEvents.cs) (VB: [CustomEvents.vb](./VB/PrintingViaReports/Data/CustomEvents.vb))
+* [Form1.cs](./CS/PrintingViaReports/Form1.cs) (VB: [Form1.vb](./VB/PrintingViaReports/Form1.vb))
+* [Form1.vb](./CS/PrintingViaReports/Form1.vb) (VB: [Form1.vb](./VB/PrintingViaReports/Form1.vb))
+* [MyAppointmentEditForm.cs](./CS/PrintingViaReports/MyAppointmentEditForm.cs) (VB: [MyAppointmentEditForm.vb](./VB/PrintingViaReports/MyAppointmentEditForm.vb))
+* [Program.cs](./CS/PrintingViaReports/Program.cs) (VB: [Program.vb](./VB/PrintingViaReports/Program.vb))
+* [Task.cs](./CS/PrintingViaReports/Task.cs) (VB: [Task.vb](./VB/PrintingViaReports/Task.vb))
+* [XtraReport1.cs](./CS/PrintingViaReports/XtraReport1.cs) (VB: [XtraReport1.vb](./VB/PrintingViaReports/XtraReport1.vb))
+<!-- default file list end -->
 # Printing appointment details using the XtraReports Suite
 
 
