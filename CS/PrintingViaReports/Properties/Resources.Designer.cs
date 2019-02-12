@@ -15,7 +15,7 @@
 // method.
 // To display custom fields in the report, the custom fields
 // (http://documentation.devexpress.com/#WindowsForms/clsDevExpressXtraSchedulerNativeCustomFieldtopic)
-// should be exposed as common object properties. So a wrapper class Task is
+// should be exposed as common object properties.  
 // implemented solely for this purpose. Using the SetAppointmentFactory
 // (http://documentation.devexpress.com/#WindowsForms/DevExpressXtraSchedulerAppointmentStorageBase_SetAppointmentFactorytopic)
 // method, Scheduler's Appointment objects are replaced with the Task class
