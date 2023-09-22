@@ -1,7 +1,37 @@
-Imports Microsoft.VisualBasic
-Imports System
+' Developer Express Code Central Example:
+' Printing appointment details using the XtraReports Suite
+' 
+' This example illustrates how you can print the appointment details for the
+' appointments currently displayed in the Scheduler by means of the XtraReports
+' Suite.
+' The key point is to obtain a collection of appointments and assign it to
+' the report's DataSource
+' (http://documentation.devexpress.com/#XtraReports/DevExpressXtraReportsUIXtraReportBase_DataSourcetopic).
+' To accomplish this, the GetAppointments
+' (http://documentation.devexpress.com/#WindowsForms/DevExpressXtraSchedulerSchedulerStorageBase_GetAppointmentstopic)
+' method is used to get a collection of appointments which fall within the time
+' range specified by the GetVisibleIntervals
+' (http://documentation.devexpress.com/#WindowsForms/DevExpressXtraSchedulerSchedulerViewBase_GetVisibleIntervalstopic)
+' method.
+' To display custom fields in the report, the custom fields
+' (http://documentation.devexpress.com/#WindowsForms/clsDevExpressXtraSchedulerNativeCustomFieldtopic)
+' should be exposed as common object properties. So a wrapper class Task is
+' implemented solely for this purpose. Using the SetAppointmentFactory
+' (http://documentation.devexpress.com/#WindowsForms/DevExpressXtraSchedulerAppointmentStorageBase_SetAppointmentFactorytopic)
+' method, Scheduler's Appointment objects are replaced with the Task class
+' instances. A TaskCollection class holds Task objects and can be used as the
+' report's data source.
+' Note that you should have a valid license to the
+' XtraReports Suite
+' (http://documentation.devexpress.com/#XtraReports/CustomDocument2162) to be able
+' to use this approach in your application.
+' 
+' You can find sample updates and versions for different programming languages here:
+' http://www.devexpress.com/example=E1183
 Namespace PrintingViaReports
-    Partial Public Class Form1
+
+    Partial Class Form1
+
         ''' <summary>
         ''' Required designer variable.
         ''' </summary>
@@ -12,14 +42,14 @@ Namespace PrintingViaReports
         ''' </summary>
         ''' <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-            If disposing AndAlso (components IsNot Nothing) Then
-                components.Dispose()
+            If disposing AndAlso (Me.components IsNot Nothing) Then
+                Me.components.Dispose()
             End If
+
             MyBase.Dispose(disposing)
         End Sub
 
-        #Region "Windows Form Designer generated code"
-
+#Region "Windows Form Designer generated code"
         ''' <summary>
         ''' Required method for Designer support - do not modify
         ''' the contents of this method with the code editor.
@@ -37,13 +67,13 @@ Namespace PrintingViaReports
             Me.lblGroup = New DevExpress.XtraEditors.LabelControl()
             Me.rgrpGrouping = New DevExpress.XtraEditors.RadioGroup()
             Me.dateNavigator1 = New DevExpress.XtraScheduler.DateNavigator()
-            CType(Me.schedulerControl1, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.schedulerStorage1, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.panelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.schedulerControl1), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.schedulerStorage1), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.panelControl1), System.ComponentModel.ISupportInitialize).BeginInit()
             Me.panelControl1.SuspendLayout()
-            CType(Me.cbView.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.rgrpGrouping.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.dateNavigator1, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.cbView.Properties), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.rgrpGrouping.Properties), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.dateNavigator1), System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             ' 
             ' schedulerControl1
@@ -58,10 +88,10 @@ Namespace PrintingViaReports
             Me.schedulerControl1.Text = "schedulerControl1"
             Me.schedulerControl1.Views.DayView.TimeRulers.Add(timeRuler1)
             Me.schedulerControl1.Views.WorkWeekView.TimeRulers.Add(timeRuler2)
-'            Me.schedulerControl1.ActiveViewChanged += New System.EventHandler(Me.schedulerControl_ActiveViewChanged);
-'            Me.schedulerControl1.InitNewAppointment += New DevExpress.XtraScheduler.AppointmentEventHandler(Me.schedulerControl1_InitNewAppointment);
-'            Me.schedulerControl1.EditAppointmentFormShowing += New DevExpress.XtraScheduler.AppointmentFormEventHandler(Me.schedulerControl1_EditAppointmentFormShowing);
-'            Me.schedulerControl1.AppointmentViewInfoCustomizing += New DevExpress.XtraScheduler.AppointmentViewInfoCustomizingEventHandler(Me.schedulerControl1_AppointmentViewInfoCustomizing);
+            AddHandler Me.schedulerControl1.ActiveViewChanged, New System.EventHandler(AddressOf Me.schedulerControl_ActiveViewChanged)
+            AddHandler Me.schedulerControl1.InitNewAppointment, New DevExpress.XtraScheduler.AppointmentEventHandler(AddressOf Me.schedulerControl1_InitNewAppointment)
+            AddHandler Me.schedulerControl1.EditAppointmentFormShowing, New DevExpress.XtraScheduler.AppointmentFormEventHandler(AddressOf Me.schedulerControl1_EditAppointmentFormShowing)
+            AddHandler Me.schedulerControl1.AppointmentViewInfoCustomizing, New DevExpress.XtraScheduler.AppointmentViewInfoCustomizingEventHandler(AddressOf Me.schedulerControl1_AppointmentViewInfoCustomizing)
             ' 
             ' panelControl1
             ' 
@@ -83,19 +113,19 @@ Namespace PrintingViaReports
             Me.simpleButton1.Size = New System.Drawing.Size(120, 23)
             Me.simpleButton1.TabIndex = 11
             Me.simpleButton1.Text = "Print Appointments"
-'            Me.simpleButton1.Click += New System.EventHandler(Me.simpleButton1_Click);
+            AddHandler Me.simpleButton1.Click, New System.EventHandler(AddressOf Me.simpleButton1_Click)
             ' 
             ' cbView
             ' 
-            Me.cbView.Anchor = (CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles))
+            Me.cbView.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) Or System.Windows.Forms.AnchorStyles.Right)), System.Windows.Forms.AnchorStyles)
             Me.cbView.EditValue = ""
             Me.cbView.Location = New System.Drawing.Point(52, 9)
             Me.cbView.Name = "cbView"
-            Me.cbView.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() { New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-            Me.cbView.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.ImageComboBoxItem() { New DevExpress.XtraEditors.Controls.ImageComboBoxItem("Day View", DevExpress.XtraScheduler.SchedulerViewType.Day, -1), New DevExpress.XtraEditors.Controls.ImageComboBoxItem("Work Week View", DevExpress.XtraScheduler.SchedulerViewType.WorkWeek, -1), New DevExpress.XtraEditors.Controls.ImageComboBoxItem("Week View", DevExpress.XtraScheduler.SchedulerViewType.Week, -1), New DevExpress.XtraEditors.Controls.ImageComboBoxItem("Month View", DevExpress.XtraScheduler.SchedulerViewType.Month, -1), New DevExpress.XtraEditors.Controls.ImageComboBoxItem("Timeline View", DevExpress.XtraScheduler.SchedulerViewType.Timeline, -1)})
+            Me.cbView.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+            Me.cbView.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.ImageComboBoxItem() {New DevExpress.XtraEditors.Controls.ImageComboBoxItem("Day View", DevExpress.XtraScheduler.SchedulerViewType.Day, -1), New DevExpress.XtraEditors.Controls.ImageComboBoxItem("Work Week View", DevExpress.XtraScheduler.SchedulerViewType.WorkWeek, -1), New DevExpress.XtraEditors.Controls.ImageComboBoxItem("Week View", DevExpress.XtraScheduler.SchedulerViewType.Week, -1), New DevExpress.XtraEditors.Controls.ImageComboBoxItem("Month View", DevExpress.XtraScheduler.SchedulerViewType.Month, -1), New DevExpress.XtraEditors.Controls.ImageComboBoxItem("Timeline View", DevExpress.XtraScheduler.SchedulerViewType.Timeline, -1)})
             Me.cbView.Size = New System.Drawing.Size(212, 20)
             Me.cbView.TabIndex = 10
-'            Me.cbView.SelectedIndexChanged += New System.EventHandler(Me.cbView_SelectedIndexChanged);
+            AddHandler Me.cbView.SelectedIndexChanged, New System.EventHandler(AddressOf Me.cbView_SelectedIndexChanged)
             ' 
             ' lblView
             ' 
@@ -107,7 +137,7 @@ Namespace PrintingViaReports
             ' 
             ' lblGroup
             ' 
-            Me.lblGroup.Anchor = (CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles))
+            Me.lblGroup.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right)), System.Windows.Forms.AnchorStyles)
             Me.lblGroup.Location = New System.Drawing.Point(278, 12)
             Me.lblGroup.Name = "lblGroup"
             Me.lblGroup.Size = New System.Drawing.Size(48, 13)
@@ -116,15 +146,15 @@ Namespace PrintingViaReports
             ' 
             ' rgrpGrouping
             ' 
-            Me.rgrpGrouping.Anchor = (CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles))
+            Me.rgrpGrouping.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right)), System.Windows.Forms.AnchorStyles)
             Me.rgrpGrouping.EditValue = 1
             Me.rgrpGrouping.Location = New System.Drawing.Point(332, 5)
             Me.rgrpGrouping.Name = "rgrpGrouping"
             Me.rgrpGrouping.Properties.Columns = 3
-            Me.rgrpGrouping.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() { New DevExpress.XtraEditors.Controls.RadioGroupItem(DevExpress.XtraScheduler.SchedulerGroupType.None, "None"), New DevExpress.XtraEditors.Controls.RadioGroupItem(DevExpress.XtraScheduler.SchedulerGroupType.Date, "Date"), New DevExpress.XtraEditors.Controls.RadioGroupItem(DevExpress.XtraScheduler.SchedulerGroupType.Resource, "Resource")})
+            Me.rgrpGrouping.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() {New DevExpress.XtraEditors.Controls.RadioGroupItem(DevExpress.XtraScheduler.SchedulerGroupType.None, "None"), New DevExpress.XtraEditors.Controls.RadioGroupItem(DevExpress.XtraScheduler.SchedulerGroupType.[Date], "Date"), New DevExpress.XtraEditors.Controls.RadioGroupItem(DevExpress.XtraScheduler.SchedulerGroupType.Resource, "Resource")})
             Me.rgrpGrouping.Size = New System.Drawing.Size(253, 24)
             Me.rgrpGrouping.TabIndex = 7
-'            Me.rgrpGrouping.SelectedIndexChanged += New System.EventHandler(Me.rgrpGrouping_SelectedIndexChanged);
+            AddHandler Me.rgrpGrouping.SelectedIndexChanged, New System.EventHandler(AddressOf Me.rgrpGrouping_SelectedIndexChanged)
             ' 
             ' dateNavigator1
             ' 
@@ -147,29 +177,34 @@ Namespace PrintingViaReports
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
             Me.Name = "Form1"
             Me.Text = "SchedulerProject"
-            CType(Me.schedulerControl1, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.schedulerStorage1, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.panelControl1, System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.schedulerControl1), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.schedulerStorage1), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.panelControl1), System.ComponentModel.ISupportInitialize).EndInit()
             Me.panelControl1.ResumeLayout(False)
             Me.panelControl1.PerformLayout()
-            CType(Me.cbView.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.rgrpGrouping.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.dateNavigator1, System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.cbView.Properties), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.rgrpGrouping.Properties), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.dateNavigator1), System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
-
         End Sub
 
-        #End Region
+#End Region
+        Private schedulerControl1 As DevExpress.XtraScheduler.SchedulerControl
 
-        Private WithEvents schedulerControl1 As DevExpress.XtraScheduler.SchedulerControl
         Private schedulerStorage1 As DevExpress.XtraScheduler.SchedulerStorage
+
         Private panelControl1 As DevExpress.XtraEditors.PanelControl
+
         Private dateNavigator1 As DevExpress.XtraScheduler.DateNavigator
-        Private WithEvents cbView As DevExpress.XtraEditors.ImageComboBoxEdit
+
+        Private cbView As DevExpress.XtraEditors.ImageComboBoxEdit
+
         Private lblView As DevExpress.XtraEditors.LabelControl
+
         Private lblGroup As DevExpress.XtraEditors.LabelControl
-        Private WithEvents rgrpGrouping As DevExpress.XtraEditors.RadioGroup
-        Private WithEvents simpleButton1 As DevExpress.XtraEditors.SimpleButton
+
+        Private rgrpGrouping As DevExpress.XtraEditors.RadioGroup
+
+        Private simpleButton1 As DevExpress.XtraEditors.SimpleButton
     End Class
 End Namespace
-

@@ -1,7 +1,37 @@
-﻿Imports Microsoft.VisualBasic
-Imports System
+' Developer Express Code Central Example:
+' Printing appointment details using the XtraReports Suite
+' 
+' This example illustrates how you can print the appointment details for the
+' appointments currently displayed in the Scheduler by means of the XtraReports
+' Suite.
+' The key point is to obtain a collection of appointments and assign it to
+' the report's DataSource
+' (http://documentation.devexpress.com/#XtraReports/DevExpressXtraReportsUIXtraReportBase_DataSourcetopic).
+' To accomplish this, the GetAppointments
+' (http://documentation.devexpress.com/#WindowsForms/DevExpressXtraSchedulerSchedulerStorageBase_GetAppointmentstopic)
+' method is used to get a collection of appointments which fall within the time
+' range specified by the GetVisibleIntervals
+' (http://documentation.devexpress.com/#WindowsForms/DevExpressXtraSchedulerSchedulerViewBase_GetVisibleIntervalstopic)
+' method.
+' To display custom fields in the report, the custom fields
+' (http://documentation.devexpress.com/#WindowsForms/clsDevExpressXtraSchedulerNativeCustomFieldtopic)
+' should be exposed as common object properties. So a wrapper class Task is
+' implemented solely for this purpose. Using the SetAppointmentFactory
+' (http://documentation.devexpress.com/#WindowsForms/DevExpressXtraSchedulerAppointmentStorageBase_SetAppointmentFactorytopic)
+' method, Scheduler's Appointment objects are replaced with the Task class
+' instances. A TaskCollection class holds Task objects and can be used as the
+' report's data source.
+' Note that you should have a valid license to the
+' XtraReports Suite
+' (http://documentation.devexpress.com/#XtraReports/CustomDocument2162) to be able
+' to use this approach in your application.
+' 
+' You can find sample updates and versions for different programming languages here:
+' http://www.devexpress.com/example=E1183
 Namespace PrintingViaReports
-    Partial Public Class MyAppointmentEditForm
+
+    Partial Class MyAppointmentEditForm
+
         ''' <summary>
         ''' Required designer variable.
         ''' </summary>
@@ -12,14 +42,14 @@ Namespace PrintingViaReports
         ''' </summary>
         ''' <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-            If disposing AndAlso (components IsNot Nothing) Then
-                components.Dispose()
+            If disposing AndAlso (Me.components IsNot Nothing) Then
+                Me.components.Dispose()
             End If
+
             MyBase.Dispose(disposing)
         End Sub
 
-        #Region "Windows Form Designer generated code"
-
+#Region "Windows Form Designer generated code"
         ''' <summary>
         ''' Required method for Designer support - do not modify
         ''' the contents of this method with the code editor.
@@ -47,19 +77,19 @@ Namespace PrintingViaReports
             Me.edtCustomColor = New DevExpress.XtraEditors.ColorEdit()
             Me.edtDescription = New DevExpress.XtraEditors.MemoExEdit()
             Me.lblDescription = New DevExpress.XtraEditors.LabelControl()
-            CType(Me.checkAllDay.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.timeEnd.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.timeStart.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.dtEnd.Properties.VistaTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.dtEnd.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.dtStart.Properties.VistaTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.dtStart.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.txCustomText.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.edStatus.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.edLabel.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.txSubject.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.edtCustomColor.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.edtDescription.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.checkAllDay.Properties), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.timeEnd.Properties), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.timeStart.Properties), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.dtEnd.Properties.VistaTimeProperties), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.dtEnd.Properties), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.dtStart.Properties.VistaTimeProperties), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.dtStart.Properties), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.txCustomText.Properties), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.edStatus.Properties), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.edLabel.Properties), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.txSubject.Properties), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.edtCustomColor.Properties), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.edtDescription.Properties), System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             ' 
             ' checkAllDay
@@ -69,49 +99,49 @@ Namespace PrintingViaReports
             Me.checkAllDay.Properties.Caption = "All day event"
             Me.checkAllDay.Size = New System.Drawing.Size(88, 19)
             Me.checkAllDay.TabIndex = 23
-'            Me.checkAllDay.CheckedChanged += New System.EventHandler(Me.checkAllDay_CheckedChanged);
+            AddHandler Me.checkAllDay.CheckedChanged, New System.EventHandler(AddressOf Me.checkAllDay_CheckedChanged)
             ' 
             ' timeEnd
             ' 
             Me.timeEnd.EditValue = New System.DateTime(2006, 3, 28, 0, 0, 0, 0)
             Me.timeEnd.Location = New System.Drawing.Point(196, 68)
             Me.timeEnd.Name = "timeEnd"
-            Me.timeEnd.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() { New DevExpress.XtraEditors.Controls.EditorButton()})
+            Me.timeEnd.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton()})
             Me.timeEnd.Size = New System.Drawing.Size(90, 20)
             Me.timeEnd.TabIndex = 21
-'            Me.timeEnd.EditValueChanged += New System.EventHandler(Me.timeEnd_EditValueChanged);
+            AddHandler Me.timeEnd.EditValueChanged, New System.EventHandler(AddressOf Me.timeEnd_EditValueChanged)
             ' 
             ' timeStart
             ' 
             Me.timeStart.EditValue = New System.DateTime(2006, 3, 28, 0, 0, 0, 0)
             Me.timeStart.Location = New System.Drawing.Point(196, 44)
             Me.timeStart.Name = "timeStart"
-            Me.timeStart.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() { New DevExpress.XtraEditors.Controls.EditorButton()})
+            Me.timeStart.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton()})
             Me.timeStart.Size = New System.Drawing.Size(90, 20)
             Me.timeStart.TabIndex = 19
-'            Me.timeStart.EditValueChanged += New System.EventHandler(Me.timeStart_EditValueChanged);
+            AddHandler Me.timeStart.EditValueChanged, New System.EventHandler(AddressOf Me.timeStart_EditValueChanged)
             ' 
             ' dtEnd
             ' 
             Me.dtEnd.EditValue = New System.DateTime(2005, 11, 25, 0, 0, 0, 0)
             Me.dtEnd.Location = New System.Drawing.Point(94, 68)
             Me.dtEnd.Name = "dtEnd"
-            Me.dtEnd.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() { New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-            Me.dtEnd.Properties.VistaTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() { New DevExpress.XtraEditors.Controls.EditorButton()})
+            Me.dtEnd.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+            Me.dtEnd.Properties.VistaTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton()})
             Me.dtEnd.Size = New System.Drawing.Size(96, 20)
             Me.dtEnd.TabIndex = 20
-'            Me.dtEnd.EditValueChanged += New System.EventHandler(Me.dtEnd_EditValueChanged);
+            AddHandler Me.dtEnd.EditValueChanged, New System.EventHandler(AddressOf Me.dtEnd_EditValueChanged)
             ' 
             ' dtStart
             ' 
             Me.dtStart.EditValue = New System.DateTime(2005, 11, 25, 0, 0, 0, 0)
             Me.dtStart.Location = New System.Drawing.Point(94, 44)
             Me.dtStart.Name = "dtStart"
-            Me.dtStart.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() { New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-            Me.dtStart.Properties.VistaTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() { New DevExpress.XtraEditors.Controls.EditorButton()})
+            Me.dtStart.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+            Me.dtStart.Properties.VistaTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton()})
             Me.dtStart.Size = New System.Drawing.Size(96, 20)
             Me.dtStart.TabIndex = 18
-'            Me.dtStart.EditValueChanged += New System.EventHandler(Me.dtStart_EditValueChanged);
+            AddHandler Me.dtStart.EditValueChanged, New System.EventHandler(AddressOf Me.dtStart_EditValueChanged)
             ' 
             ' txCustomText
             ' 
@@ -165,7 +195,7 @@ Namespace PrintingViaReports
             ' 
             Me.edStatus.Location = New System.Drawing.Point(94, 115)
             Me.edStatus.Name = "edStatus"
-            Me.edStatus.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() { New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+            Me.edStatus.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
             Me.edStatus.Size = New System.Drawing.Size(192, 20)
             Me.edStatus.TabIndex = 24
             ' 
@@ -173,7 +203,7 @@ Namespace PrintingViaReports
             ' 
             Me.edLabel.Location = New System.Drawing.Point(94, 140)
             Me.edLabel.Name = "edLabel"
-            Me.edLabel.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() { New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+            Me.edLabel.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
             Me.edLabel.Size = New System.Drawing.Size(192, 20)
             Me.edLabel.TabIndex = 25
             ' 
@@ -200,7 +230,7 @@ Namespace PrintingViaReports
             Me.btnRecurrence.Size = New System.Drawing.Size(80, 27)
             Me.btnRecurrence.TabIndex = 32
             Me.btnRecurrence.Text = "Recurrence"
-'            Me.btnRecurrence.Click += New System.EventHandler(Me.btnRecurrence_Click);
+            AddHandler Me.btnRecurrence.Click, New System.EventHandler(AddressOf Me.btnRecurrence_Click)
             ' 
             ' btnCancel
             ' 
@@ -219,7 +249,7 @@ Namespace PrintingViaReports
             Me.btnOK.Size = New System.Drawing.Size(75, 27)
             Me.btnOK.TabIndex = 29
             Me.btnOK.Text = "OK"
-'            Me.btnOK.Click += New System.EventHandler(Me.btnOK_Click);
+            AddHandler Me.btnOK.Click, New System.EventHandler(AddressOf Me.btnOK_Click)
             ' 
             ' lblEnd
             ' 
@@ -234,7 +264,7 @@ Namespace PrintingViaReports
             Me.edtCustomColor.EditValue = System.Drawing.Color.Empty
             Me.edtCustomColor.Location = New System.Drawing.Point(94, 217)
             Me.edtCustomColor.Name = "edtCustomColor"
-            Me.edtCustomColor.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() { New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+            Me.edtCustomColor.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
             Me.edtCustomColor.Size = New System.Drawing.Size(192, 20)
             Me.edtCustomColor.TabIndex = 37
             ' 
@@ -242,7 +272,7 @@ Namespace PrintingViaReports
             ' 
             Me.edtDescription.Location = New System.Drawing.Point(94, 166)
             Me.edtDescription.Name = "edtDescription"
-            Me.edtDescription.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() { New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+            Me.edtDescription.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
             Me.edtDescription.Size = New System.Drawing.Size(192, 20)
             Me.edtDescription.TabIndex = 38
             ' 
@@ -284,47 +314,66 @@ Namespace PrintingViaReports
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
             Me.Name = "MyAppointmentEditForm"
             Me.Text = "My Appointment Form"
-            CType(Me.checkAllDay.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.timeEnd.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.timeStart.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.dtEnd.Properties.VistaTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.dtEnd.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.dtStart.Properties.VistaTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.dtStart.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.txCustomText.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.edStatus.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.edLabel.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.txSubject.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.edtCustomColor.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.edtDescription.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.checkAllDay.Properties), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.timeEnd.Properties), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.timeStart.Properties), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.dtEnd.Properties.VistaTimeProperties), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.dtEnd.Properties), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.dtStart.Properties.VistaTimeProperties), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.dtStart.Properties), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.txCustomText.Properties), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.edStatus.Properties), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.edLabel.Properties), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.txSubject.Properties), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.edtCustomColor.Properties), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.edtDescription.Properties), System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
-
         End Sub
 
-        #End Region
+#End Region
+        Private checkAllDay As DevExpress.XtraEditors.CheckEdit
 
-        Private WithEvents checkAllDay As DevExpress.XtraEditors.CheckEdit
-        Private WithEvents timeEnd As DevExpress.XtraEditors.TimeEdit
-        Private WithEvents timeStart As DevExpress.XtraEditors.TimeEdit
-        Private WithEvents dtEnd As DevExpress.XtraEditors.DateEdit
-        Private WithEvents dtStart As DevExpress.XtraEditors.DateEdit
+        Private timeEnd As DevExpress.XtraEditors.TimeEdit
+
+        Private timeStart As DevExpress.XtraEditors.TimeEdit
+
+        Private dtEnd As DevExpress.XtraEditors.DateEdit
+
+        Private dtStart As DevExpress.XtraEditors.DateEdit
+
         Private txCustomText As DevExpress.XtraEditors.TextEdit
+
         Private lblCustomColor As System.Windows.Forms.Label
+
         Private lblCustomText As System.Windows.Forms.Label
+
         Private lblStart As System.Windows.Forms.Label
+
         Private lblLabel As System.Windows.Forms.Label
+
         Private lblStatus As System.Windows.Forms.Label
+
         Private edStatus As DevExpress.XtraScheduler.UI.AppointmentStatusEdit
+
         Private edLabel As DevExpress.XtraScheduler.UI.AppointmentLabelEdit
+
         Private txSubject As DevExpress.XtraEditors.TextEdit
+
         Private lblSubject As System.Windows.Forms.Label
-        Private WithEvents btnRecurrence As DevExpress.XtraEditors.SimpleButton
+
+        Private btnRecurrence As DevExpress.XtraEditors.SimpleButton
+
         Private btnCancel As DevExpress.XtraEditors.SimpleButton
-        Private WithEvents btnOK As DevExpress.XtraEditors.SimpleButton
+
+        Private btnOK As DevExpress.XtraEditors.SimpleButton
+
         Private lblEnd As System.Windows.Forms.Label
+
         Private edtCustomColor As DevExpress.XtraEditors.ColorEdit
+
         Private edtDescription As DevExpress.XtraEditors.MemoExEdit
+
         Private lblDescription As DevExpress.XtraEditors.LabelControl
     End Class
 End Namespace

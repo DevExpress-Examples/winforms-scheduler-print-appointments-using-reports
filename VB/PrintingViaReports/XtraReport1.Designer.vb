@@ -1,7 +1,37 @@
-Imports Microsoft.VisualBasic
-Imports System
+' Developer Express Code Central Example:
+' Printing appointment details using the XtraReports Suite
+' 
+' This example illustrates how you can print the appointment details for the
+' appointments currently displayed in the Scheduler by means of the XtraReports
+' Suite.
+' The key point is to obtain a collection of appointments and assign it to
+' the report's DataSource
+' (http://documentation.devexpress.com/#XtraReports/DevExpressXtraReportsUIXtraReportBase_DataSourcetopic).
+' To accomplish this, the GetAppointments
+' (http://documentation.devexpress.com/#WindowsForms/DevExpressXtraSchedulerSchedulerStorageBase_GetAppointmentstopic)
+' method is used to get a collection of appointments which fall within the time
+' range specified by the GetVisibleIntervals
+' (http://documentation.devexpress.com/#WindowsForms/DevExpressXtraSchedulerSchedulerViewBase_GetVisibleIntervalstopic)
+' method.
+' To display custom fields in the report, the custom fields
+' (http://documentation.devexpress.com/#WindowsForms/clsDevExpressXtraSchedulerNativeCustomFieldtopic)
+' should be exposed as common object properties. So a wrapper class Task is
+' implemented solely for this purpose. Using the SetAppointmentFactory
+' (http://documentation.devexpress.com/#WindowsForms/DevExpressXtraSchedulerAppointmentStorageBase_SetAppointmentFactorytopic)
+' method, Scheduler's Appointment objects are replaced with the Task class
+' instances. A TaskCollection class holds Task objects and can be used as the
+' report's data source.
+' Note that you should have a valid license to the
+' XtraReports Suite
+' (http://documentation.devexpress.com/#XtraReports/CustomDocument2162) to be able
+' to use this approach in your application.
+' 
+' You can find sample updates and versions for different programming languages here:
+' http://www.devexpress.com/example=E1183
 Namespace PrintingViaReports
-    Partial Public Class XtraReport1
+
+    Partial Class XtraReport1
+
         ''' <summary>
         ''' Required designer variable.
         ''' </summary>
@@ -12,14 +42,14 @@ Namespace PrintingViaReports
         ''' </summary>
         ''' <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-            If disposing AndAlso (components IsNot Nothing) Then
-                components.Dispose()
+            If disposing AndAlso (Me.components IsNot Nothing) Then
+                Me.components.Dispose()
             End If
+
             MyBase.Dispose(disposing)
         End Sub
 
-        #Region "Designer generated code"
-
+#Region "Designer generated code"
         ''' <summary>
         ''' Required method for Designer support - do not modify
         ''' the contents of this method with the code editor.
@@ -41,18 +71,18 @@ Namespace PrintingViaReports
             Me.PageHeader = New DevExpress.XtraReports.UI.PageHeaderBand()
             Me.PageFooter = New DevExpress.XtraReports.UI.PageFooterBand()
             Me.bindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
-            CType(Me.bindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
+            Me.ReportPrintOptions.DetailCountOnEmptyDataSource = 0
+            CType((Me.bindingSource1), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me), System.ComponentModel.ISupportInitialize).BeginInit()
             ' 
             ' Detail
             ' 
-            Me.Detail.Controls.AddRange(New DevExpress.XtraReports.UI.XRControl() { Me.xrLine1, Me.xrLabel11, Me.xrLabel10, Me.xrLabel9, Me.xrLabel8, Me.xrLabel6, Me.xrLabel7, Me.xrLabel5, Me.xrLabel4, Me.xrLabel3, Me.xrLabel2})
+            Me.Detail.Controls.AddRange(New DevExpress.XtraReports.UI.XRControl() {Me.xrLine1, Me.xrLabel11, Me.xrLabel10, Me.xrLabel9, Me.xrLabel8, Me.xrLabel6, Me.xrLabel7, Me.xrLabel5, Me.xrLabel4, Me.xrLabel3, Me.xrLabel2})
             Me.Detail.Height = 208
             Me.Detail.KeepTogether = True
             Me.Detail.Name = "Detail"
             Me.Detail.Padding = New DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F)
             Me.Detail.PageBreak = DevExpress.XtraReports.UI.PageBreak.AfterBand
-            Me.Detail.PrintOnEmptyDataSource = False
             Me.Detail.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft
             ' 
             ' xrLine1
@@ -63,7 +93,7 @@ Namespace PrintingViaReports
             ' 
             ' xrLabel11
             ' 
-            Me.xrLabel11.DataBindings.AddRange(New DevExpress.XtraReports.UI.XRBinding() { New DevExpress.XtraReports.UI.XRBinding("Text", Nothing, "Description", "")})
+            Me.xrLabel11.DataBindings.AddRange(New DevExpress.XtraReports.UI.XRBinding() {New DevExpress.XtraReports.UI.XRBinding("Text", Nothing, "Description", "")})
             Me.xrLabel11.Location = New System.Drawing.Point(125, 100)
             Me.xrLabel11.Multiline = True
             Me.xrLabel11.Name = "xrLabel11"
@@ -73,7 +103,7 @@ Namespace PrintingViaReports
             ' 
             ' xrLabel10
             ' 
-            Me.xrLabel10.DataBindings.AddRange(New DevExpress.XtraReports.UI.XRBinding() { New DevExpress.XtraReports.UI.XRBinding("Text", Nothing, "End", "")})
+            Me.xrLabel10.DataBindings.AddRange(New DevExpress.XtraReports.UI.XRBinding() {New DevExpress.XtraReports.UI.XRBinding("Text", Nothing, "End", "")})
             Me.xrLabel10.Location = New System.Drawing.Point(125, 75)
             Me.xrLabel10.Name = "xrLabel10"
             Me.xrLabel10.Padding = New DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F)
@@ -82,7 +112,7 @@ Namespace PrintingViaReports
             ' 
             ' xrLabel9
             ' 
-            Me.xrLabel9.DataBindings.AddRange(New DevExpress.XtraReports.UI.XRBinding() { New DevExpress.XtraReports.UI.XRBinding("Text", Nothing, "Start", "")})
+            Me.xrLabel9.DataBindings.AddRange(New DevExpress.XtraReports.UI.XRBinding() {New DevExpress.XtraReports.UI.XRBinding("Text", Nothing, "Start", "")})
             Me.xrLabel9.Location = New System.Drawing.Point(125, 50)
             Me.xrLabel9.Name = "xrLabel9"
             Me.xrLabel9.Padding = New DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F)
@@ -91,7 +121,7 @@ Namespace PrintingViaReports
             ' 
             ' xrLabel8
             ' 
-            Me.xrLabel8.DataBindings.AddRange(New DevExpress.XtraReports.UI.XRBinding() { New DevExpress.XtraReports.UI.XRBinding("Text", Nothing, "Subject", "")})
+            Me.xrLabel8.DataBindings.AddRange(New DevExpress.XtraReports.UI.XRBinding() {New DevExpress.XtraReports.UI.XRBinding("Text", Nothing, "Subject", "")})
             Me.xrLabel8.Font = New System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold)
             Me.xrLabel8.Location = New System.Drawing.Point(8, 17)
             Me.xrLabel8.Name = "xrLabel8"
@@ -104,24 +134,24 @@ Namespace PrintingViaReports
             ' 
             ' xrLabel6
             ' 
-            Me.xrLabel6.DataBindings.AddRange(New DevExpress.XtraReports.UI.XRBinding() { New DevExpress.XtraReports.UI.XRBinding("Text", Nothing, "CustomColorARGB", "")})
+            Me.xrLabel6.DataBindings.AddRange(New DevExpress.XtraReports.UI.XRBinding() {New DevExpress.XtraReports.UI.XRBinding("Text", Nothing, "CustomColorARGB", "")})
             Me.xrLabel6.Location = New System.Drawing.Point(8, 50)
             Me.xrLabel6.Name = "xrLabel6"
             Me.xrLabel6.Padding = New DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F)
             Me.xrLabel6.Size = New System.Drawing.Size(25, 158)
             Me.xrLabel6.Text = "xrLabel6"
-'            Me.xrLabel6.BeforePrint += New System.Drawing.Printing.PrintEventHandler(Me.xrLabel6_BeforePrint);
+            AddHandler Me.xrLabel6.BeforePrint, New System.Drawing.Printing.PrintEventHandler(AddressOf Me.xrLabel6_BeforePrint)
             ' 
             ' xrLabel7
             ' 
-            Me.xrLabel7.DataBindings.AddRange(New DevExpress.XtraReports.UI.XRBinding() { New DevExpress.XtraReports.UI.XRBinding("Text", Nothing, "CustomText", "")})
+            Me.xrLabel7.DataBindings.AddRange(New DevExpress.XtraReports.UI.XRBinding() {New DevExpress.XtraReports.UI.XRBinding("Text", Nothing, "CustomText", "")})
             Me.xrLabel7.Location = New System.Drawing.Point(133, 175)
             Me.xrLabel7.Multiline = True
             Me.xrLabel7.Name = "xrLabel7"
             Me.xrLabel7.Padding = New DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F)
             Me.xrLabel7.Size = New System.Drawing.Size(492, 25)
             Me.xrLabel7.Text = "xrLabel7"
-'            Me.xrLabel7.BeforePrint += New System.Drawing.Printing.PrintEventHandler(Me.xrLabel7_BeforePrint);
+            AddHandler Me.xrLabel7.BeforePrint, New System.Drawing.Printing.PrintEventHandler(AddressOf Me.xrLabel7_BeforePrint)
             ' 
             ' xrLabel5
             ' 
@@ -176,30 +206,42 @@ Namespace PrintingViaReports
             ' 
             ' XtraReport1
             ' 
-            Me.Bands.AddRange(New DevExpress.XtraReports.UI.Band() { Me.Detail, Me.PageHeader, Me.PageFooter})
+            Me.Bands.AddRange(New DevExpress.XtraReports.UI.Band() {Me.Detail, Me.PageHeader, Me.PageFooter})
             Me.DataSource = Me.bindingSource1
             Me.Version = "8.3"
-            CType(Me.bindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
-
+            CType((Me.bindingSource1), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me), System.ComponentModel.ISupportInitialize).EndInit()
         End Sub
 
-        #End Region
-
+#End Region
         Private Detail As DevExpress.XtraReports.UI.DetailBand
+
         Private PageHeader As DevExpress.XtraReports.UI.PageHeaderBand
+
         Private PageFooter As DevExpress.XtraReports.UI.PageFooterBand
+
         Private bindingSource1 As System.Windows.Forms.BindingSource
+
         Private xrLabel2 As DevExpress.XtraReports.UI.XRLabel
+
         Private xrLabel5 As DevExpress.XtraReports.UI.XRLabel
+
         Private xrLabel4 As DevExpress.XtraReports.UI.XRLabel
+
         Private xrLabel3 As DevExpress.XtraReports.UI.XRLabel
-        Private WithEvents xrLabel7 As DevExpress.XtraReports.UI.XRLabel
-        Private WithEvents xrLabel6 As DevExpress.XtraReports.UI.XRLabel
+
+        Private xrLabel7 As DevExpress.XtraReports.UI.XRLabel
+
+        Private xrLabel6 As DevExpress.XtraReports.UI.XRLabel
+
         Private xrLabel11 As DevExpress.XtraReports.UI.XRLabel
+
         Private xrLabel10 As DevExpress.XtraReports.UI.XRLabel
+
         Private xrLabel9 As DevExpress.XtraReports.UI.XRLabel
+
         Private xrLabel8 As DevExpress.XtraReports.UI.XRLabel
+
         Private xrLine1 As DevExpress.XtraReports.UI.XRLine
     End Class
 End Namespace
