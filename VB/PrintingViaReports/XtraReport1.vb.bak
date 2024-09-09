@@ -43,14 +43,14 @@ Namespace PrintingViaReports
             InitializeComponent()
         End Sub
 
-        Private Sub xrLabel6_BeforePrint(ByVal sender As Object, ByVal e As CancelEventArgs) Handles xrLabel6.BeforePrint
+        Private Sub xrLabel6_BeforePrint(ByVal sender As Object, ByVal e As System.Drawing.Printing.PrintEventArgs) Handles xrLabel6.BeforePrint
             ' Fill the label with color
             Dim curColor As Color = Color.FromArgb(Int32.Parse(DirectCast(sender, XRLabel).Text))
             DirectCast(sender, XRLabel).BackColor = curColor
             DirectCast(sender, XRLabel).ForeColor = curColor
         End Sub
 
-        Private Sub xrLabel7_BeforePrint(ByVal sender As Object, ByVal e As CancelEventArgs) Handles xrLabel7.BeforePrint
+        Private Sub xrLabel7_BeforePrint(ByVal sender As Object, ByVal e As System.Drawing.Printing.PrintEventArgs) Handles xrLabel7.BeforePrint
             Dim curColor As Color = CType(GetCurrentColumnValue("CustomColor"), Color)
             DirectCast(sender, XRLabel).ForeColor = curColor
             DirectCast(sender, XRLabel).Text = DirectCast(sender, XRLabel).Text & ControlChars.Lf & ControlChars.Cr & curColor.Name & " color"

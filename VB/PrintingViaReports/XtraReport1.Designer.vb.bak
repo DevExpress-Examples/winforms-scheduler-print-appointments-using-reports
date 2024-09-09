@@ -121,7 +121,7 @@ Namespace PrintingViaReports
             ' xrLabel8
             ' 
             Me.xrLabel8.DataBindings.AddRange(New DevExpress.XtraReports.UI.XRBinding() { New DevExpress.XtraReports.UI.XRBinding("Text", Nothing, "Subject", "")})
-            Me.xrLabel8.Font = New DevExpress.Drawing.DXFont("Tahoma", 14F, DevExpress.Drawing.DXFontStyle.Bold)
+            Me.xrLabel8.Font = New System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold)
             Me.xrLabel8.Location = New System.Drawing.Point(8, 17)
             Me.xrLabel8.Name = "xrLabel8"
             Me.xrLabel8.Padding = New DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F)

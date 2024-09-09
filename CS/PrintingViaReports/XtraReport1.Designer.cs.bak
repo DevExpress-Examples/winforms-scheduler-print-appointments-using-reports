@@ -136,7 +136,7 @@ namespace PrintingViaReports {
             // 
             this.xrLabel8.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
             new DevExpress.XtraReports.UI.XRBinding("Text", null, "Subject", "")});
-            this.xrLabel8.Font = new DevExpress.Drawing.DXFont("Tahoma", 14F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.xrLabel8.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
             this.xrLabel8.Location = new System.Drawing.Point(8, 17);
             this.xrLabel8.Name = "xrLabel8";
             this.xrLabel8.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
@@ -155,7 +155,7 @@ namespace PrintingViaReports {
             this.xrLabel6.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel6.Size = new System.Drawing.Size(25, 158);
             this.xrLabel6.Text = "xrLabel6";
-            this.xrLabel6.BeforePrint += new DevExpress.XtraReports.UI.BeforePrintEventHandler(this.xrLabel6_BeforePrint);
+            this.xrLabel6.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.xrLabel6_BeforePrint);
             // 
             // xrLabel7
             // 
@@ -167,7 +167,7 @@ namespace PrintingViaReports {
             this.xrLabel7.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel7.Size = new System.Drawing.Size(492, 25);
             this.xrLabel7.Text = "xrLabel7";
-            this.xrLabel7.BeforePrint += new DevExpress.XtraReports.UI.BeforePrintEventHandler(this.xrLabel7_BeforePrint);
+            this.xrLabel7.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.xrLabel7_BeforePrint);
             // 
             // xrLabel5
             // 
